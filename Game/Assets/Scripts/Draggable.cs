@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] SpringJoint2D joint;
+    [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private SpringJoint2D _joint;
 
-    private Vector2 offset;
+    private Vector2 _offset;
 
     private void OnMouseDown()
     {
-        rb.gravityScale = 0;
-        joint.enabled = true;
-        offset = (Vector2)transform.position - (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _rb.gravityScale = 0;
+        _joint.enabled = true;
+        _offset = (Vector2)transform.position - (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void OnMouseDrag()
     {
-        joint.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+        _joint.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
     }
 
     private void OnMouseUp()
     {
-        joint.enabled = false;
-        rb.gravityScale = 1;
+        _joint.enabled = false;
+        _rb.gravityScale = 1;
     }
 }

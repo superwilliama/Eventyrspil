@@ -5216,7 +5216,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032500031}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
@@ -5261,8 +5261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 057b7636d829842f49fbf9ecd9a8da19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1242798089}
-  joint: {fileID: 314435131}
+  _rb: {fileID: 1242798089}
+  _joint: {fileID: 314435131}
 --- !u!61 &1242798086
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5346,7 +5346,9 @@ EdgeCollider2D:
   - {x: -0.111724064, y: 0.15030038}
   - {x: -0.085285224, y: -0.12984408}
   - {x: -0.06888528, y: -0.15832451}
-  - {x: -0.0006059855, y: -0.17425258}
+  - {x: -0.039972343, y: -0.1770392}
+  - {x: -0.0006059855, y: -0.17605717}
+  - {x: 0.04020989, y: -0.17664964}
   - {x: 0.06803048, y: -0.1587003}
   - {x: 0.09319798, y: -0.12363117}
   - {x: 0.11589903, y: 0.14195035}
