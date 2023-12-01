@@ -27,4 +27,12 @@ public class InputManager : MonoBehaviour
     private void OnDisable() => _inputMaster.Disable();
 
     public Vector2 OnMove() => _inputMaster.Player.Move.ReadValue<Vector2>();
+
+    public Vector2 OnCursorPos() => _inputMaster.Player.Cursor.ReadValue<Vector2>();
+
+    public bool OnClickPress() => _inputMaster.Player.Click.WasPressedThisFrame();
+
+    public bool OnClickRelease() => _inputMaster.Player.Click.WasReleasedThisFrame();
+
+    public bool OnClickHold() => _inputMaster.Player.Click.IsPressed();
 }
