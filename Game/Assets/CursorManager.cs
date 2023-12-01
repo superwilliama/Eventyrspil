@@ -4,22 +4,31 @@ public class CursorManager : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _renderer;
 
-    [SerializeField] private Texture2D _handOpenCursor;
-    [SerializeField] private Texture2D _handClosedCursor;
+    [SerializeField] private Sprite _handOpenCursor;
+    [SerializeField] private Sprite _handClosedCursor;
 
     private InputManager _input;
 
     private void Start()
     {
         _input = InputManager.Instance;
-        Cursor.SetCursor(_handClosedCursor, new Vector2(10, 10), CursorMode.Auto);
+        Cursor.visible = false;
     }
 
     private void Update()
     {
+        transform.position = (Vector2)Camera.main.ScreenToWorldPoint(_input.OnCursorPos());
+
         if (_input.OnClickPress())
-            Cursor.SetCursor(_handClosedCursor, new Vector2(10, 10), CursorMode.Auto);
+            ChangeCursor(_handClosedCursor, 8, 200);
         else if (_input.OnClickRelease())
-            Cursor.SetCursor(_handOpenCursor, new Vector2(10, 10), CursorMode.Auto);
+            ChangeCursor(_handOpenCursor, 10, 255);
+    }
+
+    private void ChangeCursor(Sprite cursor, int scale, byte brightness)
+    {
+        _renderer.sprite = cursor;
+        transform.localScale = new Vector3(scale, scale, scale);
+        _renderer.color = new Color32(brightness, brightness, brightness, 255);
     }
 }
