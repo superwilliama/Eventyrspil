@@ -17,15 +17,15 @@ public class CursorManager : MonoBehaviour
 
     private void Update()
     {
-        transform.position = (Vector2)Camera.main.ScreenToWorldPoint(_input.OnCursorPos());
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(_input.OnCursorPos().x, _input.OnCursorPos().y, Camera.main.nearClipPlane));
 
         if (_input.OnClickPress())
-            ChangeCursor(_handClosedCursor, 8, 200);
+            ChangeCursor(_handClosedCursor, 6f, 200);
         else if (_input.OnClickRelease())
-            ChangeCursor(_handOpenCursor, 10, 255);
+            ChangeCursor(_handOpenCursor, 7.5f, 255);
     }
 
-    private void ChangeCursor(Sprite cursor, int scale, byte brightness)
+    private void ChangeCursor(Sprite cursor, float scale, byte brightness)
     {
         _renderer.sprite = cursor;
         transform.localScale = new Vector3(scale, scale, scale);

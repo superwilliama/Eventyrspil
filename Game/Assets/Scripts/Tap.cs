@@ -4,7 +4,7 @@ public class Tap : MonoBehaviour
 {
     [SerializeField] private GameObject _liquidParticlePrefab;
 
-    [SerializeField] private Draggable glass;
+    [SerializeField] private Glass _glass;
 
     private InputManager _input;
 
@@ -12,7 +12,7 @@ public class Tap : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (_input.OnClickHold() && !glass.isDragging)
+        if (_input.OnClickHold() && !_glass.isDragging)
         {
             float randomX = Random.Range(transform.position.x + 0.1f, transform.position.x - 0.1f);
             float randomY = Random.Range(transform.position.y + 0.1f, transform.position.y - 0.1f);
