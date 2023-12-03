@@ -53,6 +53,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""96eabfa3-dd0a-47d4-b339-06eb2bb4db17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""Cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b6695e8-a683-44ab-89a1-aa745d684757"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Cursor = m_Player.FindAction("Cursor", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Cursor;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Click => m_Wrapper.m_Player_Click;
         public InputAction @Cursor => m_Wrapper.m_Player_Cursor;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Cursor.started += instance.OnCursor;
             @Cursor.performed += instance.OnCursor;
             @Cursor.canceled += instance.OnCursor;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -245,6 +271,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Cursor.started -= instance.OnCursor;
             @Cursor.performed -= instance.OnCursor;
             @Cursor.canceled -= instance.OnCursor;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -267,5 +296,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnCursor(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

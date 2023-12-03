@@ -3,14 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class CounterTrigger : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private InputManager _input;
+
+    private void Start() => _input = InputManager.Instance;
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (other.tag == "Player")
+        if (collision.tag == "Player" && _input.OnInteract())
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                SceneManager.LoadScene(1);
-            }
+            print("pressed");
         }
     }
 }

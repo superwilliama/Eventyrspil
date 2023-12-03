@@ -35,4 +35,6 @@ public class InputManager : MonoBehaviour
     public bool OnClickRelease() => _inputMaster.Player.Click.WasReleasedThisFrame();
 
     public bool OnClickHold() => _inputMaster.Player.Click.IsPressed();
+
+    public bool OnInteract() => _inputMaster.Player.Interact.WasPressedThisFrame();
 }
