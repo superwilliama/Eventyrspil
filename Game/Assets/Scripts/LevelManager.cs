@@ -7,8 +7,20 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private CanvasGroup _crossfadeImage;
     [SerializeField] private float _transitionTime = 1f;
 
+    private static LevelManager _instance;
+    public static LevelManager Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+            Destroy(gameObject);
+        else
+            _instance = this;
+    }
+
     private void Start()
     {
+        _crossfadeImage.gameObject.SetActive(true);
         StartCoroutine(Crossfade(1, 0));
     }
 
@@ -32,7 +44,7 @@ public class LevelManager : MonoBehaviour
         _crossfadeImage.alpha = to;
 
         if (levelIndex < 0)
-            yield return null;
+            yield break;
 
         SceneManager.LoadScene(levelIndex);
     }

@@ -1,5 +1,5 @@
 [System.Serializable]
-public class Drink
+public struct Drink
 {
     public string name;
     public int sweetLiquidNeeded;

@@ -6,62 +6,73 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Animator _animator;
 
-    [SerializeField] private float _speed = 5f;
+    public float speed = 5f;
 
     private Dictionary<string, string> _walkToIdleMap = new Dictionary<string, string>
     {
         {"PlayerWalkSouth", "PlayerIdleSouth"},
-        {"PlayerWalkSouthEast", "PlayerIdleEast"},
         {"PlayerWalkEast", "PlayerIdleEast"},
-        {"PlayerWalkNorthEast", "PlayerIdleNorthEast"},
         {"PlayerWalkNorth", "PlayerIdleNorth"},
-        {"PlayerWalkNorthWest", "PlayerIdleNorthWest"},
         {"PlayerWalkWest", "PlayerIdleWest"},
-        {"PlayerWalkSouthWest", "PlayerIdleSouthWest"}
     };
 
     private InputManager _input;
+    private CharacterManager _character;
+    private InteractionManager _interaction;
 
-    private void Start() => _input = InputManager.Instance;
+    private void Start()
+    {
+        _input = InputManager.Instance;
+        _character = CharacterManager.Instance;
+        _interaction = InteractionManager.Instance;
+    }
 
     private void FixedUpdate()
     {
-        _rb.MovePosition(_rb.position + _input.OnMove().normalized * _speed * Time.fixedDeltaTime);
+        _rb.MovePosition(_rb.position + _input.OnMove().normalized * speed * Time.fixedDeltaTime);
     }
 
     private void Update()
     {
-        string inputValue = _input.OnMove().ToString();
-
-        switch (inputValue)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            case "(0.00, 0.00)":
-                FaceCorrectDirection();
-                break;
-            case "(0.00, -1.00)":
-                _animator.Play("PlayerWalkSouth");
-                break;
-            case "(0.71, -0.71)":
-                _animator.Play("PlayerWalkSouthEast");
-                break;
-            case "(1.00, 0.00)":
-                _animator.Play("PlayerWalkEast");
-                break;
-            case "(0.71, 0.71)":
-                _animator.Play("PlayerWalkNorthEast");
-                break;
-            case "(0.00, 1.00)":
-                _animator.Play("PlayerWalkNorth");
-                break;
-            case "(-0.71, 0.71)":
-                _animator.Play("PlayerWalkNorthWest");
-                break;
-            case "(-1.00, 0.00)":
-                _animator.Play("PlayerWalkWest");
-                break;
-            case "(-0.71, -0.71)":
-                _animator.Play("PlayerWalkSouthWest");
-                break;
+            print(StaticData.currentDrink);
+        }
+
+        if (speed != 0)
+        {
+            string inputValue = _input.OnMove().ToString();
+
+            switch (inputValue)
+            {
+                case "(0.00, 0.00)":
+                    FaceCorrectDirection();
+                    break;
+                case "(0.00, -1.00)":
+                    _animator.Play("PlayerWalkSouth");
+                    break;
+                case "(1.00, 0.00)":
+                    _animator.Play("PlayerWalkEast");
+                    break;
+                case "(0.00, 1.00)":
+                    _animator.Play("PlayerWalkNorth");
+                    break;
+                case "(-1.00, 0.00)":
+                    _animator.Play("PlayerWalkWest");
+                    break;
+            }
+        }
+
+        if (_character.currentCharacter != null)
+        {
+            if (Vector2.Distance(transform.position, _character.currentCharacter.transform.position) <= 2 && _input.OnInteract())
+            {
+                _interaction.Interact(_character.currentCharacter.startSentences);
+            }
+            else if (Vector2.Distance(transform.position, _character.currentCharacter.transform.position) > 2 && _interaction.interactionIsActive)
+            {
+                _interaction.EndInteraction();
+            }
         }
     }
 
